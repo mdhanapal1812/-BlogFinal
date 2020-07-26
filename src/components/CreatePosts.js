@@ -57,8 +57,8 @@ const CreatePost = () => {
             <textarea
                 type="text"
                 name="postBody"
-                rows="3"
-                cols="40"
+                rows="10"
+                cols="5"
                 required
                 placeholder="New Blog Post"
                 value={postBody}

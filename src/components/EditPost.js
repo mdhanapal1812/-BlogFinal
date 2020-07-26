@@ -38,10 +38,7 @@ const EditPost = (props) => {
         }
 
         await API.graphql(graphqlOperation(updatePost, { input }))
-
-        //force close the modal 
         setShow(!show)
-
     }
 
     const handleTitle = event => {
@@ -96,8 +93,6 @@ const EditPost = (props) => {
                 </div>
             )
             }
-
-
 
             <button class="small ui blue button" onClick={handleModal}>Edit</button>
         </>

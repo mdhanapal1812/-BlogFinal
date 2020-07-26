@@ -72,7 +72,7 @@ const DisplayPost = () => {
                 next: postData => {
                     const postsOp = posts
                     const updatePost = postData.value.data.onUpdatePost
-                    const index = postsOp.findIndex(post => post.id === updatePost.id) //had forgotten to say updatePost.id!
+                    const index = postsOp.findIndex(post => post.id === updatePost.id)
                     const updatePosts = [
                         ...postsOp.slice(0, index),
                         updatePost,
