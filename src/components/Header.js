@@ -3,7 +3,9 @@ import { Link } from "react-router-dom"
 import { AmplifySignOut } from '@aws-amplify/ui-react';
 
 
-
+/**
+ * Component to return the header navigation section
+ */
 const Header = () => {
 
     return (

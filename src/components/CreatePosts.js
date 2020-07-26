@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { API, graphqlOperation, Auth } from 'aws-amplify'
 import { createPost } from '../graphql/mutations'
 
+/**
+ * Component to create a post.
+ */
 const CreatePost = () => {
 
     const [postOwnerId, setPostOwnerId] = useState("")

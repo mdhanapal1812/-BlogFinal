@@ -5,18 +5,11 @@ import Blog from "./components/Blog";
 import Home from "./components/Home"
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { HashRouter, Route, Switch } from "react-router-dom";
-import awsExports from "./aws-exports";
 import history from "./components/History";
 import Header from "./components/Header"
 import { Auth } from 'aws-amplify'
 
 import "./App.css"
-
-import Amplify from "aws-amplify";
-Amplify.configure(awsExports)
-
-
-
 
 const App = () => {
   const [userName, setUsername] = useState("");

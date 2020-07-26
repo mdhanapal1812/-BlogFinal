@@ -1,7 +1,10 @@
 import React from 'react'
 
+/**
+ * Component to return the comment section
+ * @param  props Receives the properties passed from parent component. 
+ */
 const CommentPost = (props) => {
-
 
     const { content, commentOwnerUsername, createdAt } = props.commentData
     return (

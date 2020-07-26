@@ -11,6 +11,9 @@ import { FaSadTear } from 'react-icons/fa';
 import { Auth } from 'aws-amplify'
 import UsersWhoLikedPost from './UsersWhoLikedPost'
 
+/**
+ * Component to display the posts
+ */
 const DisplayPost = () => {
 
     const [ownerId, setOwnerId] = useState("");
@@ -19,11 +22,11 @@ const DisplayPost = () => {
     const [postLikedBy, setPostLikedBy] = useState([]);
     const [isHovering, setIsHovering] = useState(false);
     const [posts, setPosts] = useState([])
-    const [postsDisplay, setPostDisplay] = useState([])
-
-
 
     useEffect(() => {
+        /**
+         * Retreiving the posts.
+         */
         getPosts()
 
         Auth.currentAuthenticatedUser().then(
@@ -34,6 +37,9 @@ const DisplayPost = () => {
         )
 
 
+        /**
+         * Subscription query , to subscribe to the messages whenever a new post is created.
+         */
         API.graphql(graphqlOperation(onCreatePost))
             .subscribe({
                 next: postData => {
@@ -45,6 +51,9 @@ const DisplayPost = () => {
                 }
             })
 
+        /**
+         * Subscription query , to subscribe to the messages whenever a post is deleted.
+         */
         API.graphql(graphqlOperation(onDeletePost))
             .subscribe({
                 next: postData => {
@@ -55,6 +64,9 @@ const DisplayPost = () => {
                 }
             })
 
+        /**
+         * Subscription query , to subscribe to the messages whenever a post is updated.
+         */
         API.graphql(graphqlOperation(onUpdatePost))
             .subscribe({
                 next: postData => {
@@ -69,6 +81,10 @@ const DisplayPost = () => {
                     setPosts(updatePosts)
                 }
             })
+
+        /**
+         * Subscription query to subscribe to the comments.
+         */
 
         API.graphql(graphqlOperation(onCreateComment))
             .subscribe({
@@ -85,6 +101,9 @@ const DisplayPost = () => {
                 }
             })
 
+        /** 
+         * Subscription query to subscribe to likes on posts.
+         */
         API.graphql(graphqlOperation(onCreateLike))
             .subscribe({
                 next: postData => {
@@ -101,13 +120,20 @@ const DisplayPost = () => {
             })
     }
     );
+
+    /**
+     *  Retreive the posts and store it in state.
+     */
     const getPosts = async () => {
         const result = await API.graphql(graphqlOperation(listPosts))
 
         setPosts(result.data.listPosts.items)
-        setPostDisplay(result.data.listPosts.items)
-
     }
+
+    /**
+     *  Method to check if user is trying to like his/her own post.
+     * @param postId  - Represents the postId for which we need to find the likes
+     */
 
     const likedPost = (postId) => {
 
@@ -124,6 +150,10 @@ const DisplayPost = () => {
         return false;
     }
 
+    /**
+     * Method to store the like for a post.
+     * @param postId represents the post ID for which the user want to like. 
+     */
     const handleLike = async postId => {
         if (likedPost(postId)) { return setErrorMessage("Can't Like Your Own Post.") } else {
             const input = {
@@ -144,6 +174,10 @@ const DisplayPost = () => {
 
     }
 
+    /**
+     * Method to find the user names of people who have liked the post.
+     * @param  postId Represents the post for which we want to find the information of likes.
+     */
     const handleMouseHover = async postId => {
         setIsHovering(!isHovering)
         let innerLikes = postLikedBy
@@ -157,13 +191,20 @@ const DisplayPost = () => {
         }
     }
 
+    /**
+     * Method to display nothing when the user isn't hovering on like symbol
+     */
     const handleMouseHoverLeave = async () => {
         setIsHovering(!isHovering)
         setPostLikedBy([])
     }
 
     return (
-        postsDisplay.map((post) => {
+
+        /**
+         * For each post , Display the required content.
+         */
+        posts.map((post) => {
             return (
                 <div className="posts" style={rowStyle} key={post.id}>
                     <h1> {post.postTitle}</h1>

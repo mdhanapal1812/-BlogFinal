@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Auth, API, graphqlOperation } from 'aws-amplify'
 import { createComment } from '../graphql/mutations'
 
+/**
+ * Component to create a comment for a post and store it in Database.
+ * @param  props Receives the properties passed from parent component. 
+ */
 const CreateCommentPost = (props) => {
 
     const [commentOwnerId, setCommentOwnerId] = useState("");

@@ -3,6 +3,10 @@ import { Auth, API, graphqlOperation } from 'aws-amplify'
 import { updatePost } from '../graphql/mutations'
 
 
+/**
+ * Component to edit a post
+ * @param  props Receives the properties passed from parent component. 
+ */
 const EditPost = (props) => {
 
     const [show, setShow] = useState(false);
