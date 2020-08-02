@@ -8,35 +8,36 @@ import { HashRouter, Route, Switch } from "react-router-dom";
 import SinglePost from './components/SinglePost';
 import Header from "./components/Header"
 import { Auth } from 'aws-amplify'
+import checkEditor from "./components/checkEditor";
+import { UserProvider } from "./store/UserContext"
+
 
 import "./App.css"
+import signIn from './components/signIn';
+
+
 global.Buffer = global.Buffer || require('buffer').Buffer
 const App = () => {
-  const [userName, setUsername] = useState("");
-
-
-  useEffect(() => {
-    Auth.currentAuthenticatedUser().then(
-      user => {
-
-        setUsername(user.username);
-      }
-    )
-  })
 
   return (
     <div className="App">
 
       <HashRouter >
         <div id='ui container'>
-          <h2>Hi {userName}</h2>
-          <Header />
+
+
           <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/Blog' exact component={Blog} />
-            <Route path='/Blog/CreatePost' exact component={CreatePosts} />
-            <Route path='/Blog/DisplayPost' exact component={DisplayPost} />
-            <Route path='/Blog/DisplayPost/:id' exact component={SinglePost} />
+
+            <UserProvider>
+              <Header />
+              <Route path='/' exact component={Home} />
+              <Route path='/Blog' exact component={Blog} />
+              <Route path='/Blog/CreatePost' exact component={CreatePosts} />
+              <Route path='/Blog/DisplayPost' exact component={DisplayPost} />
+              <Route path='/Blog/DisplayPost/:id' exact component={SinglePost} />
+              <Route path='/checkEditor' exact component={checkEditor} />
+              <Route path='/signIn' exact component={signIn} />
+            </UserProvider>
           </Switch>
         </div>
       </HashRouter>
@@ -44,4 +45,5 @@ const App = () => {
   );
 }
 
-export default withAuthenticator(App);
+//export default withAuthenticator(App);
+export default App;

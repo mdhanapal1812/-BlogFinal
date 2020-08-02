@@ -48,8 +48,8 @@ const CreateCommentPost = (props) => {
                     <textarea
                         type="text"
                         name="content"
-                        rows="10"
-                        cols="5"
+                        rows="3"
+                        cols="2"
                         required
                         placeholder="Add Your Comment..."
                         value={content}

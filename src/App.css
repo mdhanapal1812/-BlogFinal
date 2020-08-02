@@ -1,29 +1,11 @@
-/* body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #282c34;
-}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-.App {
-    max-width: 1000px;
-    margin: 2rem auto 0 auto;
-    padding: 1rem;
-    background-color: rgb(255, 255, 255);
-    font-size: 1rem;
-    box-shadow: 1px 1px 9px 7px #36181833;
-    color: #282c34
-    
-}
+
 
 .container {
   padding: 0 1rem;
@@ -40,20 +22,8 @@ input[type=text], select {
   box-sizing: border-box;
 }
 
-input[type=submit] {
-  width: 100%;
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
-input[type=submit]:hover {
-  background-color: #45a049;
-}
+
 
 .add-post{
   display: flex;
@@ -74,18 +44,18 @@ input[type=submit]:hover {
 
 
 .posts div{
-  box-shadow: 1px 1px 1px rgb(182, 235, 171);
+
   padding: .5rem;
   margin: .6rem;
-  background-color: white;
+  background-color:gainsboro;
 }
 
 .modal{
    position: absolute;
    top:40px;
    right: 200px;
-   width: 60%;
-   height: 70%;
+   width: 50%;
+   height: 60%;
    box-shadow: 4px 4px 4px rgb(114, 116, 114);
    animation: move .2s backwards;
 }
@@ -100,23 +70,11 @@ input[type=submit]:hover {
 }
 div {
   border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
+
+  padding: 10px;
 }
- .clean-area  {
-  border-radius: 0px;
-  background-color: #45a049;
-}
-.btn-delete {
-  display: inline-block;
-  width: 100%;
-  border-radius: 4px;
-  /* border: none; 
-  background: #0ca5e297;
-  color: #ffffff;
-  padding: 7px 20px;
-  cursor: pointer;
-}
+
+
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -145,21 +103,9 @@ input,textarea{
   padding: 1rem;
   font-size: 1.2rem;
 }
-/* button{
-  width:15%;
-  background-color: rgb(49, 142, 248);
-  padding: .8rem;
-  font-weight: 500;
-  border-radius: 4px;
-  float: right;
-  color: aliceblue;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 15px;
-}
- 
+
 .users-liked {
-  width: 100px;
+max-width: 300px;
   color: #282c34;
   border: none;
   background-color: "gray";
@@ -170,15 +116,6 @@ input,textarea{
   color: crimson;
   font-style: italic;
   font-size: 14px;
-}
-.like-button {
-   font-weight: 600;
-   border-radius: 6;
-   padding: "8px";
-   color: rgb(80, 82, 80);
-   width: "40px";
-   font-style: italic;
-   cursor: pointer;
 }
 
 
@@ -197,4 +134,4 @@ button:hover{
   to {
     transform: rotate(360deg);
   }
-} */
+} 

@@ -13,12 +13,13 @@ import UsersWhoLikedPost from './UsersWhoLikedPost'
 import CreateCommentPost from './CreateCommentPost'
 import CommentPost from './CommentPost'
 import { FaSadTear } from 'react-icons/fa';
+import { useAlert } from 'react-alert'
 
 /**
  * Component to display the posts
  */
 const DisplayPost = () => {
-
+    const alert = useAlert()
 
     const [posts, setPosts] = useState([])
     const [ownerId, setOwnerId] = useState("");
@@ -26,8 +27,6 @@ const DisplayPost = () => {
     const [isHovering, setIsHovering] = useState(false);
     const [ownerUsername, setOwnerUsername] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-
-
 
 
     useEffect(() => {
@@ -49,7 +48,9 @@ const DisplayPost = () => {
                 setOwnerId(user.attributes.sub);
                 setOwnerUsername(user.username);
             }
-        )
+        ).catch(err => {
+
+        })
 
 
         /**
@@ -188,9 +189,9 @@ const DisplayPost = () => {
             console.log(posts);
             return (
                 <div className="posts" style={rowStyle} key={post.id}>
-                    <h1> <Link to={`/Blog/DisplayPost/${post.id}`} params={{ post }}>{post.postTitle}</Link></h1>
+                    <h1 style={{ textDecoration: "underline" }}> <Link to={`/Blog/DisplayPost/${post.id}`} params={{ post }}>{post.postTitle}</Link></h1>
                     <p> {post.postDescription}</p>
-                    <span style={{ fontStyle: "italic", color: "#0ca5e297", fontWeight: "bold" }}>
+                    <span style={{ fontStyle: "italic", color: "#0a1010", fontWeight: "bold" }}>
                         {"Wrote by: "} {post.postOwnerUsername}
 
                         {" on "}
@@ -200,15 +201,18 @@ const DisplayPost = () => {
                         </time>
 
                     </span>
-                    <span>
-                        {post.postOwnerId === ownerId &&
-                            <DeletePost data={post} />
-                        }
+                    <div>
+                        <span>
 
-                        {post.postOwnerId === ownerId &&
-                            <EditPost {...post} />
-                        }
-                    </span>
+                            {post.postOwnerId === ownerId &&
+                                <DeletePost data={post} />
+                            }
+
+                            {post.postOwnerId === ownerId &&
+                                <EditPost {...post} />
+                            }
+                        </span>
+                    </div>
 
                     {/*  <p> {post.postBody}</p>
                     <br />
@@ -225,13 +229,16 @@ const DisplayPost = () => {
                         <p className="alert">{post.postOwnerId === ownerId && errorMessage}</p>
                         <p onMouseEnter={() => handleMouseHover(post.id)}
                             onMouseLeave={() => handleMouseHoverLeave()}
-                            onClick={() => handleLike(post.id)}
+                            onClick={() => {
+
+                                ownerId ? handleLike(post.id) : alert.show("Please sign in")
+                            }}
                             style={{ color: (post.likes.items.length > 0) ? "blue" : "g" }}
                             className="like-button">
                             <i class="thumbs up outline icon"></i>
                             {post.likes.items.length}
                         </p>
-                        {/* {
+                        {/*         {
                             isHovering &&
                             <div className="users-liked">
                                 {postLikedBy.length === 0 ?
@@ -239,8 +246,8 @@ const DisplayPost = () => {
                                 {postLikedBy.length === 0 ? <FaSadTear /> : <UsersWhoLikedPost data={postLikedBy} />}
 
                             </div>
-                        } */}
-
+                        }
+ */}
 
                     </span>
 
