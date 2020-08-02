@@ -12,14 +12,14 @@
             "AmplifyAppId": "dg44t81gagh4q"
         },
         "categories": {
-            "auth": {
-                "bloggingsite491e8b68": {}
-            },
             "hosting": {
                 "amplifyhosting": {
                     "appId": "dg44t81gagh4q",
                     "type": "manual"
                 }
+            },
+            "auth": {
+                "bloggingsitebc3ea923": {}
             }
         }
     }

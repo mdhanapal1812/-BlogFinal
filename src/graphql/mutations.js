@@ -12,7 +12,9 @@ export const createPost = /* GraphQL */ `
       postOwnerUsername
       postTitle
       postBody
+      postDescription
       createdAt
+      description
       comments {
         items {
           id
@@ -50,7 +52,9 @@ export const updatePost = /* GraphQL */ `
       postOwnerUsername
       postTitle
       postBody
+      postDescription
       createdAt
+      description
       comments {
         items {
           id
@@ -88,7 +92,9 @@ export const deletePost = /* GraphQL */ `
       postOwnerUsername
       postTitle
       postBody
+      postDescription
       createdAt
+      description
       comments {
         items {
           id
@@ -130,7 +136,9 @@ export const createComment = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -160,7 +168,9 @@ export const updateComment = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -190,7 +200,9 @@ export const deleteComment = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -221,7 +233,9 @@ export const createLike = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -251,7 +265,9 @@ export const updateLike = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -281,7 +297,9 @@ export const deleteLike = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }

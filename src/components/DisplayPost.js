@@ -1,29 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import { listPosts } from '../graphql/queries'
 import { API, graphqlOperation } from 'aws-amplify'
-import DeletePost from './DeletePost'
-import EditPost from './EditPost'
-import { onCreatePost, onDeletePost, onUpdatePost, onCreateComment, onCreateLike } from '../graphql/subscriptions'
+
+import { onCreatePost, onDeletePost, onUpdatePost, onCreateLike } from '../graphql/subscriptions'
+import { Auth } from 'aws-amplify'
+
+import { Link } from "react-router-dom"
+import DeletePost from "./DeletePost"
+import EditPost from "./EditPost"
 import { createLike } from '../graphql/mutations'
+import UsersWhoLikedPost from './UsersWhoLikedPost'
 import CreateCommentPost from './CreateCommentPost'
 import CommentPost from './CommentPost'
 import { FaSadTear } from 'react-icons/fa';
-import { Auth } from 'aws-amplify'
-import UsersWhoLikedPost from './UsersWhoLikedPost'
 
 /**
  * Component to display the posts
  */
 const DisplayPost = () => {
 
+
+    const [posts, setPosts] = useState([])
     const [ownerId, setOwnerId] = useState("");
-    const [ownerUsername, setOwnerUsername] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
     const [postLikedBy, setPostLikedBy] = useState([]);
     const [isHovering, setIsHovering] = useState(false);
-    const [posts, setPosts] = useState([])
+    const [ownerUsername, setOwnerUsername] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+
+
 
     useEffect(() => {
+        /**
+*  Retreive the posts and store it in state.
+*/
+        const getPosts = async () => {
+            const result = await API.graphql(graphqlOperation(listPosts))
+
+            setPosts(result.data.listPosts.items)
+        }
         /**
          * Retreiving the posts.
          */
@@ -40,7 +55,7 @@ const DisplayPost = () => {
         /**
          * Subscription query , to subscribe to the messages whenever a new post is created.
          */
-        API.graphql(graphqlOperation(onCreatePost))
+        const create = API.graphql(graphqlOperation(onCreatePost))
             .subscribe({
                 next: postData => {
                     const newPost = postData.value.data.onCreatePost
@@ -54,7 +69,7 @@ const DisplayPost = () => {
         /**
          * Subscription query , to subscribe to the messages whenever a post is deleted.
          */
-        API.graphql(graphqlOperation(onDeletePost))
+        const del = API.graphql(graphqlOperation(onDeletePost))
             .subscribe({
                 next: postData => {
 
@@ -67,7 +82,7 @@ const DisplayPost = () => {
         /**
          * Subscription query , to subscribe to the messages whenever a post is updated.
          */
-        API.graphql(graphqlOperation(onUpdatePost))
+        const update = API.graphql(graphqlOperation(onUpdatePost))
             .subscribe({
                 next: postData => {
                     const postsOp = posts
@@ -82,29 +97,10 @@ const DisplayPost = () => {
                 }
             })
 
-        /**
-         * Subscription query to subscribe to the comments.
-         */
-
-        API.graphql(graphqlOperation(onCreateComment))
-            .subscribe({
-                next: commentData => {
-                    const createdComment = commentData.value.data.onCreateComment
-                    let postsNew = [...posts]
-
-                    for (let post of postsNew) {
-                        if (createdComment.post.id === post.id) {
-                            post.comments.items.push(createdComment)
-                        }
-                    }
-                    setPosts(postsNew)
-                }
-            })
-
         /** 
-         * Subscription query to subscribe to likes on posts.
-         */
-        API.graphql(graphqlOperation(onCreateLike))
+   * Subscription query to subscribe to likes on posts.
+   */
+        const like = API.graphql(graphqlOperation(onCreateLike))
             .subscribe({
                 next: postData => {
                     const createdLike = postData.value.data.onCreateLike
@@ -118,22 +114,18 @@ const DisplayPost = () => {
                     setPosts(postsLike)
                 }
             })
+
+
+        return () => {
+            create.unsubscribe();
+            del.unsubscribe();
+            update.unsubscribe();
+            like.unsubscribe();
+
+        }
+
     }
-    );
-
-    /**
-     *  Retreive the posts and store it in state.
-     */
-    const getPosts = async () => {
-        const result = await API.graphql(graphqlOperation(listPosts))
-
-        setPosts(result.data.listPosts.items)
-    }
-
-    /**
-     *  Method to check if user is trying to like his/her own post.
-     * @param postId  - Represents the postId for which we need to find the likes
-     */
+        , [posts]);
 
     const likedPost = (postId) => {
 
@@ -150,10 +142,6 @@ const DisplayPost = () => {
         return false;
     }
 
-    /**
-     * Method to store the like for a post.
-     * @param postId represents the post ID for which the user want to like. 
-     */
     const handleLike = async postId => {
         if (likedPost(postId)) { return setErrorMessage("Can't Like Your Own Post.") } else {
             const input = {
@@ -174,10 +162,6 @@ const DisplayPost = () => {
 
     }
 
-    /**
-     * Method to find the user names of people who have liked the post.
-     * @param  postId Represents the post for which we want to find the information of likes.
-     */
     const handleMouseHover = async postId => {
         setIsHovering(!isHovering)
         let innerLikes = postLikedBy
@@ -191,23 +175,21 @@ const DisplayPost = () => {
         }
     }
 
-    /**
-     * Method to display nothing when the user isn't hovering on like symbol
-     */
     const handleMouseHoverLeave = async () => {
         setIsHovering(!isHovering)
         setPostLikedBy([])
     }
-
     return (
 
         /**
          * For each post , Display the required content.
          */
         posts.map((post) => {
+            console.log(posts);
             return (
                 <div className="posts" style={rowStyle} key={post.id}>
-                    <h1> {post.postTitle}</h1>
+                    <h1> <Link to={`/Blog/DisplayPost/${post.id}`} params={{ post }}>{post.postTitle}</Link></h1>
+                    <p> {post.postDescription}</p>
                     <span style={{ fontStyle: "italic", color: "#0ca5e297", fontWeight: "bold" }}>
                         {"Wrote by: "} {post.postOwnerUsername}
 
@@ -218,9 +200,6 @@ const DisplayPost = () => {
                         </time>
 
                     </span>
-
-                    <p> {post.postBody}</p>
-                    <br />
                     <span>
                         {post.postOwnerId === ownerId &&
                             <DeletePost data={post} />
@@ -229,32 +208,44 @@ const DisplayPost = () => {
                         {post.postOwnerId === ownerId &&
                             <EditPost {...post} />
                         }
-
-                        <span>
-                            <p className="alert">{post.postOwnerId === ownerId && errorMessage}</p>
-                            <p onMouseEnter={() => handleMouseHover(post.id)}
-                                onMouseLeave={() => handleMouseHoverLeave()}
-                                onClick={() => handleLike(post.id)}
-                                style={{ color: (post.likes.items.length > 0) ? "blue" : "g" }}
-                                className="like-button">
-                                <i class="thumbs up outline icon"></i>
-                                {post.likes.items.length}
-                            </p>
-                            {
-                                isHovering &&
-                                <div className="users-liked">
-                                    {postLikedBy.length === 0 ?
-                                        " Liked by No one " : "Liked by: "}
-                                    {postLikedBy.length === 0 ? <FaSadTear /> : <UsersWhoLikedPost data={postLikedBy} />}
-
-                                </div>
-                            }
-
-
-                        </span>
                     </span>
 
+                    {/*  <p> {post.postBody}</p>
+                    <br />
                     <span>
+                        {post.postOwnerId === ownerId &&
+                            <DeletePost data={post} />
+                        }
+
+                        {post.postOwnerId === ownerId &&
+                            <EditPost {...post} />
+                        } */}
+
+                    <span>
+                        <p className="alert">{post.postOwnerId === ownerId && errorMessage}</p>
+                        <p onMouseEnter={() => handleMouseHover(post.id)}
+                            onMouseLeave={() => handleMouseHoverLeave()}
+                            onClick={() => handleLike(post.id)}
+                            style={{ color: (post.likes.items.length > 0) ? "blue" : "g" }}
+                            className="like-button">
+                            <i class="thumbs up outline icon"></i>
+                            {post.likes.items.length}
+                        </p>
+                        {/* {
+                            isHovering &&
+                            <div className="users-liked">
+                                {postLikedBy.length === 0 ?
+                                    " Liked by No one " : "Liked by: "}
+                                {postLikedBy.length === 0 ? <FaSadTear /> : <UsersWhoLikedPost data={postLikedBy} />}
+
+                            </div>
+                        } */}
+
+
+                    </span>
+
+
+                    {/* <span>
                         <div class="ui minimal comments">
                             <CreateCommentPost postId={post.id} />
                             {post.comments.items.length > 0 && <span style={{ fontSize: "19px", color: "gray" }}>
@@ -263,7 +254,7 @@ const DisplayPost = () => {
                                 post.comments.items.map((comment, index) => <CommentPost key={index} commentData={comment} />)
                             }
                         </div>
-                    </span>
+                    </span> */}
                 </div>
 
             )

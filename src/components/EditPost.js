@@ -15,7 +15,8 @@ const EditPost = (props) => {
     const [postData, setPostData] = useState(
         {
             postTitle: props.postTitle,
-            postBody: props.postBody
+            postBody: props.postBody,
+            postDescription: props.postDescription
         }
     )
 
@@ -33,7 +34,8 @@ const EditPost = (props) => {
             postOwnerId: postOwnerId,
             postOwnerUsername: postOwnerUsername,
             postTitle: postData.postTitle,
-            postBody: postData.postBody
+            postBody: postData.postBody,
+            postDescription: postData.postDescription
 
         }
 
@@ -47,6 +49,10 @@ const EditPost = (props) => {
 
     const handleBody = event => {
         setPostData({ ...postData, postBody: event.target.value })
+    }
+
+    const handleDescription = event => {
+        setPostData({ ...postData, postDescription: event.target.value })
     }
 
     useEffect(() => {
@@ -75,6 +81,14 @@ const EditPost = (props) => {
                             name="postTitle"
                             value={postData.postTitle}
                             onChange={handleTitle} />
+
+                        <input
+                            style={{ height: "70px", fontSize: "19px" }}
+                            type="text"
+                            name="postDescription"
+                            value={postData.postDescription}
+                            onChange={handleBody}
+                        />
 
                         <input
                             style={{ height: "150px", fontSize: "19px" }}

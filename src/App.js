@@ -5,14 +5,15 @@ import Blog from "./components/Blog";
 import Home from "./components/Home"
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { HashRouter, Route, Switch } from "react-router-dom";
-import history from "./components/History";
+import SinglePost from './components/SinglePost';
 import Header from "./components/Header"
 import { Auth } from 'aws-amplify'
 
 import "./App.css"
-
+global.Buffer = global.Buffer || require('buffer').Buffer
 const App = () => {
   const [userName, setUsername] = useState("");
+
 
   useEffect(() => {
     Auth.currentAuthenticatedUser().then(
@@ -26,7 +27,7 @@ const App = () => {
   return (
     <div className="App">
 
-      <HashRouter history={history}>
+      <HashRouter >
         <div id='ui container'>
           <h2>Hi {userName}</h2>
           <Header />
@@ -35,6 +36,7 @@ const App = () => {
             <Route path='/Blog' exact component={Blog} />
             <Route path='/Blog/CreatePost' exact component={CreatePosts} />
             <Route path='/Blog/DisplayPost' exact component={DisplayPost} />
+            <Route path='/Blog/DisplayPost/:id' exact component={SinglePost} />
           </Switch>
         </div>
       </HashRouter>
@@ -42,6 +44,4 @@ const App = () => {
   );
 }
 
-export default withAuthenticator(App, {
-  includeGreetings: true
-});
+export default withAuthenticator(App);

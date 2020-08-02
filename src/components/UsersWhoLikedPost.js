@@ -11,8 +11,8 @@ const UsersWhoLikedPost = (props) => {
     return allUsers.map((user) => {
         return (
 
-            <div key={user}>
-                <span style={{ fontStyle: "bold", color: "#ged" }}>
+            <div style={{ display: "flex" }} key={user}>
+                <span style={{ fontStyle: "bold", color: "#ged", display: "flex" }}>
                     {user}
 
                 </span>

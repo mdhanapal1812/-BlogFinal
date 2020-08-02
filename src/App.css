@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -85,7 +85,7 @@ input[type=submit]:hover {
    top:40px;
    right: 200px;
    width: 60%;
-   height: 40%;
+   height: 70%;
    box-shadow: 4px 4px 4px rgb(114, 116, 114);
    animation: move .2s backwards;
 }
@@ -111,7 +111,7 @@ div {
   display: inline-block;
   width: 100%;
   border-radius: 4px;
-  /* border: none; */
+  /* border: none; 
   background: #0ca5e297;
   color: #ffffff;
   padding: 7px 20px;
@@ -157,7 +157,7 @@ input,textarea{
   cursor: pointer;
   margin-top: 15px;
 }
- */
+ 
 .users-liked {
   width: 100px;
   color: #282c34;
@@ -197,4 +197,4 @@ button:hover{
   to {
     transform: rotate(360deg);
   }
-}
+} */

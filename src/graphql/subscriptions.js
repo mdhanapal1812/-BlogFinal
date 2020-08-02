@@ -9,7 +9,9 @@ export const onCreatePost = /* GraphQL */ `
       postOwnerUsername
       postTitle
       postBody
+      postDescription
       createdAt
+      description
       comments {
         items {
           id
@@ -44,7 +46,9 @@ export const onUpdatePost = /* GraphQL */ `
       postOwnerUsername
       postTitle
       postBody
+      postDescription
       createdAt
+      description
       comments {
         items {
           id
@@ -79,7 +83,9 @@ export const onDeletePost = /* GraphQL */ `
       postOwnerUsername
       postTitle
       postBody
+      postDescription
       createdAt
+      description
       comments {
         items {
           id
@@ -118,7 +124,9 @@ export const onCreateComment = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -145,7 +153,9 @@ export const onUpdateComment = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -172,7 +182,9 @@ export const onDeleteComment = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -200,7 +212,9 @@ export const onCreateLike = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -227,7 +241,9 @@ export const onUpdateLike = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }
@@ -254,7 +270,9 @@ export const onDeleteLike = /* GraphQL */ `
         postOwnerUsername
         postTitle
         postBody
+        postDescription
         createdAt
+        description
         comments {
           nextToken
         }

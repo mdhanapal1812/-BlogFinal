@@ -4,7 +4,9 @@ type Post @model{
    postOwnerUsername: String!
    postTitle: String!
    postBody: String!
+   postDescription: String
    createdAt: String
+   description: String
    comments: [Comment] @connection(name: "PostComments") #relationship
    likes: [Like] @connection(name: "PostLikes")
   
